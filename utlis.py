@@ -107,18 +107,18 @@ def get_params_position(id):
     return start,end
 
 def load_randomdataset_test_data():
-    df_1 = pd.read_csv('../data/dataset/test_net21.txt',sep = ' ',index_col=False)
-    df_2 = pd.read_csv('../data/dataset/test_net21_1.txt',sep = ' ',index_col=False)
-    df_3 = pd.read_csv('../data/dataset/test_net21_2.txt',sep = ' ',index_col=False)
+    df_1 = pd.read_csv('../data/dataset/random_testset_1.txt',sep = ' ',index_col=False)
+    df_2 = pd.read_csv('../data/dataset/random_testset_2.txt',sep = ' ',index_col=False)
+    df_3 = pd.read_csv('../data/dataset/random_testset_3.txt',sep = ' ',index_col=False)
     mean_energy =(df_1['all_energy'] + df_2['all_energy'] + df_3['all_energy']) / 3
     df_1['all_energy'] = mean_energy
     
     return df_1
 
 def load_customdataset_test_data():
-    df_1 = pd.read_csv('../data/dataset/pop_test_net5.txt',sep = ' ',index_col=False)
-    df_2 = pd.read_csv('../data/dataset/pop_test_net5_1.txt',sep = ' ',index_col=False)
-    df_3 = pd.read_csv('../data/dataset/pop_test_net5_2.txt',sep = ' ',index_col=False)
+    df_1 = pd.read_csv('../data/dataset/custom_testset_1.txt',sep = ' ',index_col=False)
+    df_2 = pd.read_csv('../data/dataset/custom_testset_2.txt',sep = ' ',index_col=False)
+    df_3 = pd.read_csv('../data/dataset/custom_testset_3.txt',sep = ' ',index_col=False)
     mean_energy =(df_1['all_energy'] + df_2['all_energy'] + df_3['all_energy']) / 3
     df_1['all_energy'] = mean_energy
     

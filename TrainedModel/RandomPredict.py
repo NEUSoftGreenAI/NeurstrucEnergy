@@ -33,9 +33,10 @@ if __name__ == '__main__':
     path = './RandomModel/'
     _,_,params_min_list,params_max_list,max_layer_length = load_data('random')
     test_data = load_randomdataset_test_data()
-    df = pd.DataFrame(columns = ['MobileNetV1','MobileNetV2','InceptionV1','InceptionV2','ResNet50','ResNet18','VGG16','darknet_53','resNeXt50_32x4d',
+    df = pd.DataFrame(columns = ['MobileNetV1','MobileNetV2','InceptionV1','ResNet50','ResNet18','VGG16','darknet_53','resNeXt50_32x4d',
         'MnasNet_A1','ScarletA','ScarletB','ScarletC','MoGaA','MoGaB','MoGaC','MobileNetV3-SMALL','MobileNetV3-LARGE'])
-    for model in range(382,382+50):
+    # for model in range(382,382+50):
+    for model in [432]:
         checkpoint = torch.load(path +'model_%s' % str(model))
         
         vaild_acc = {
@@ -43,6 +44,18 @@ if __name__ == '__main__':
                 'MobileNetV2' : [],
                 'InceptionV1' : [],
                 'ResNet18' : [],
+                'ResNet50' : [],
+                'VGG16' : [],
+                'darknet_53' : [],
+                'resNeXt50_32x4d' : [],
+                'MnasNet_A1' : [],
+                'ScarletA' : [],
+                'ScarletB' : [],
+                'ScarletC' : [],
+                'MoGaA' : [],
+                'MoGaB' : [],
+                'MoGaC' : [],
+                'MobileNetV3-LARGE' : [],
                 'MobileNetV3-SMALL': []
         }
         gnn = BiGNN(nfeat=110, nhid=96, reverse_hidden=16, nheads=2)

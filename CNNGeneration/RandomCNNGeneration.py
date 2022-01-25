@@ -825,11 +825,11 @@ class VectorGenerator():
               if(input_channels <= 3):
                 out_channels = random.randint(16,32)
               else:
-                out_channels = random.randint(int(input_channels*2),input_channels*4)
+                out_channels = random.randint(int(input_channels*2),input_channels*3)
                 if(random.randint(1,100) < 30):
-                  out_channels = self.prob_random([input_channels,input_channels*2,input_channels*3,input_channels*4,input_channels*6],[0.2,0.4,0.15,0.1,0.05])
+                  out_channels = self.prob_random([input_channels,input_channels*2,input_channels*3,input_channels*4,input_channels*6],[0.2,0.6,0.12,0.05,0.03])
                 if out_channels > 1000:
-                  out_channels = self.prob_random([int(input_channels/4),int(input_channels/2),out_channels],[0.3,0.5,0.2])
+                  out_channels = self.prob_random([int(out_channels/4),int(out_channels/2),out_channels],[0.3,0.5,0.2])
                 #使最终out_channels期望稳定
                   if(random.randint(1,100) < 20):
                     out_channels = input_channels
@@ -840,7 +840,7 @@ class VectorGenerator():
               out_shape = self.prob_random([int(input_height*0.5),input_height],[0.1,0.9])
               
               if(input_channels <= 300):
-                out_channels = self.prob_random([input_channels,input_channels*2,input_channels*3],[0.3,0.5,0.2])
+                out_channels = self.prob_random([input_channels,input_channels*2,input_channels*3],[0.3,0.6,0.1])
               else:
                 out_channels = self.prob_random([int(input_channels/2),input_channels,input_channels*2],[0.4,0.4,0.2])
               if out_channels > 1000:
@@ -1408,7 +1408,7 @@ class VectorGenerator():
       if(random.randint(1,100) > no_conv_prob*100 or input_size[1] != final_output_size[1]):
         #有conv层，如果没有，以pool层替换，并省略后续的Relu等
         #前提条件是channels数相等，否则无法取消conv层
-        conv_num = 2
+        conv_num = 1
         while random.randint(1,100) <= 40:
           #计算叠加几个卷积层
           conv_num += 1
@@ -1422,13 +1422,13 @@ class VectorGenerator():
             #如果是最后一个层了，要把channel数一致
             params = self.make_layer(1,last_layer_input_size,final_output_size)
           else:
-            if random.randint(1,100) <= 97:
-              #卷积层
-              params = self.make_layer(1,last_layer_input_size)
-            else:
-              #反卷积层
-              params = self.make_layer(4,last_layer_input_size)
-              ConvTranspose = True
+            # if random.randint(1,100) <= 97:
+            #卷积层
+            params = self.make_layer(1,last_layer_input_size)
+            # else:
+            #   #反卷积层
+            #   params = self.make_layer(4,last_layer_input_size)
+            #   ConvTranspose = True
           output_size = params[4:8]
           last_layer_input_size = output_size
           self.layer_parameters += params #加入参数向量中
@@ -1440,12 +1440,12 @@ class VectorGenerator():
             #表示接收上个节点作为输入
             link_list=[self.layer_num-1]
             self.layer_link += self.get_link_vector(link_list,self.layer_num)
-          if ConvTranspose:
-            self.layer_id += [4] # 加入层id列表中
-            self.layer_num += 1
-          else:
-            self.layer_id += [1] # 加入层id列表中
-            self.layer_num += 1
+          # if ConvTranspose:
+          #   self.layer_id += [4] # 加入层id列表中
+          #   self.layer_num += 1
+          # else:
+          self.layer_id += [1] # 加入层id列表中
+          self.layer_num += 1
           ConvTranspose = False
           #加入激活层
           params = self.make_layer(22,last_layer_input_size)
@@ -1485,15 +1485,15 @@ class VectorGenerator():
         self.layer_id += [7] # 加入层id列表中
         self.layer_num += 1
         pool_type = params[-1]
-        if pool_type == 0 and random.randint(1,100) <= 20:
-          params = self.make_layer(10,last_layer_input_size,final_output_size)
-          output_size = params[4:8]
-          last_layer_input_size = output_size
-          self.layer_parameters += params #加入参数向量中
-          link_list=[self.layer_num-1]
-          self.layer_link += self.get_link_vector(link_list,self.layer_num)
-          self.layer_id += [10] # 加入层id列表中
-          self.layer_num += 1        
+        # if pool_type == 0 and random.randint(1,100) <= 20:
+        #   params = self.make_layer(10,last_layer_input_size,final_output_size)
+        #   output_size = params[4:8]
+        #   last_layer_input_size = output_size
+        #   self.layer_parameters += params #加入参数向量中
+        #   link_list=[self.layer_num-1]
+        #   self.layer_link += self.get_link_vector(link_list,self.layer_num)
+        #   self.layer_id += [10] # 加入层id列表中
+        #   self.layer_num += 1        
       else:
         params = self.make_layer(13,last_layer_input_size,final_output_size)
         output_size = params[4:8]
@@ -1814,10 +1814,10 @@ class VectorGenerator():
             else:
               # print(int(in_channels/0.8),int(in_channels*1.2))
               out_channels = random.randint(int(in_channels*0.8),int(in_channels*1.2))
-              if self.large == 1 and out_channels > 600:
-                out_channels = self.prob_random([int(out_channels/6),int(out_channels/5),int(out_channels/4)],[0.3,0.5,0.2])
-              elif self.large == 0 and out_channels > 200:
-                out_channels = self.prob_random([int(out_channels/6),int(out_channels/5),int(out_channels/4)],[0.3,0.5,0.2])
+              # if self.large == 1 and out_channels > 600:
+              #   out_channels = self.prob_random([int(out_channels/6),int(out_channels/5),int(out_channels/4)],[0.3,0.5,0.2])
+              # elif self.large == 0 and out_channels > 200:
+              out_channels = self.prob_random([int(out_channels/6),int(out_channels/5),int(out_channels/4)],[0.3,0.5,0.2])
                 
             
             output_size = [0,0,0,0]
@@ -2768,8 +2768,8 @@ def make_net_data(a):
       block_num = random.randint(4,7)
     else:
       block_num = random.randint(8,18)
-      
-    large = random.randint(0,1)
+    large = 1
+    # large = random.randint(0,1)
     try:
       dim = 2
       print(stream_num,block_num,large)
@@ -2781,7 +2781,7 @@ def make_net_data(a):
           block_num = random.randint(4,7)
         else:
           block_num = random.randint(8,18)
-        large = random.randint(0,1)
+        # large = random.randint(0,1)
         continue
     except:
       continue
@@ -2863,8 +2863,10 @@ def save_energy(iLocIndexer,forward_energy,silence_energy,all_energy,mean_power,
     with open(r'energy_%s.txt' % file_name,"a") as file:   #只需要将之前的”w"改为“a"即可，代表追加内容
         file.write(str1 + "\n")
         file.close()
+
 import gc
 import sys
+
 if __name__ == '__main__':
     for i in range(0,100000):
         num_processes = 1

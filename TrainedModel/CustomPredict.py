@@ -34,7 +34,8 @@ if __name__ == '__main__':
     _,_,params_min_list,params_max_list,max_layer_length = load_data('custom')
     test_data = load_customdataset_test_data()
     df = pd.DataFrame(columns = ['MobileNetV1','MobileNetV2','ResNet18','InceptionV1','MobileNetV3-SMALL'])
-    for model in range(542,542+50):
+    # for model in range(542,542+50):
+    for model in [592]:
         checkpoint = torch.load(path +'model_%s' % str(model))
         
         vaild_acc = {

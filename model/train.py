@@ -16,7 +16,7 @@ def parse_opt():
     parser.add_argument('--epochs', type=int, default=300)
     parser.add_argument('--weight-decay', type=float, default=4e-5)
     parser.add_argument('--hidden', type=int, default=96, help='hidden size of forward aggregator')
-    parser.add_argument('--reverse-hidden', type=int, default=96, help='hidden size of reverse aggregator')
+    parser.add_argument('--reverse-hidden', type=int, default=16, help='hidden size of reverse aggregator')
     parser.add_argument('--lr', type=float, default=0.0006, help='learning rate')
     parser.add_argument('--heads', type=int, default=2, help='number of heads')
     parser.add_argument('--dataset', type=str, default='random', help='random or custom')
